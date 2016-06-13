@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 /**
- * 发的发
+ * 发的发dev分支
  */
 public class MainActivity extends AppCompatActivity
 {
