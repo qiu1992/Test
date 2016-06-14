@@ -74,6 +74,9 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * 网络请求
+     */
     private void httpRequest ()
     {
         AsyncHttpClient httpClient = new AsyncHttpClient ();
