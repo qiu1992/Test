@@ -18,6 +18,10 @@ public class DBHelper extends OrmLiteSqliteOpenHelper
     private static final String DATA_BASE_NAME = "hello.db";
     private static final int DATA_VERSION = 1;
     private Dao<SimpleData, Integer> simpleDatas;
+    /**
+     * 这个是applicationContext
+     */
+    private static Context mContext;
 
     public DBHelper (Context context)
     {
@@ -52,27 +56,41 @@ public class DBHelper extends OrmLiteSqliteOpenHelper
     }
 
 
-    private static DBHelper instance;
-
-    /**
-     * 单例获取该Helper
-     *
-     * @param context
-     * @return
-     */
-    public static synchronized DBHelper getHelper (Context context)
+    private static class LazyHelper
     {
-        if (instance == null)
-        {
-            synchronized (DBHelper.class)
-            {
-                if (instance == null)
-                    instance = new DBHelper (context);
-            }
-        }
-
-        return instance;
+        private static DBHelper helper = new DBHelper (mContext);
     }
+
+    public static DBHelper getInstance (Context context)
+    {
+        if (null == mContext)
+        {
+            mContext = context.getApplicationContext ();
+        }
+        return LazyHelper.helper;
+    }
+
+//    private static DBHelper instance;
+//
+//    /**
+//     * 单例获取该Helper
+//     *
+//     * @param context
+//     * @return
+//     */
+//    public static synchronized DBHelper getHelper (Context context)
+//    {
+//        if (instance == null)
+//        {
+//            synchronized (DBHelper.class)
+//            {
+//                if (instance == null)
+//                    instance = new DBHelper (context.getApplicationContext ());
+//            }
+//        }
+//
+//        return instance;
+//    }
 
     public Dao<SimpleData, Integer> getDao () throws SQLException
     {
@@ -88,5 +106,6 @@ public class DBHelper extends OrmLiteSqliteOpenHelper
     {
         super.close ();
         simpleDatas = null;
+        mContext = null;
     }
 }

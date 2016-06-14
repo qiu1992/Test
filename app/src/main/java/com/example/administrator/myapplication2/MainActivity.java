@@ -1,18 +1,19 @@
 package com.example.administrator.myapplication2;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.myapplication2.db.DBHelper;
 import com.example.administrator.myapplication2.db.SimpleData;
 import com.google.gson.Gson;
+import com.loopj.android.http.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -62,12 +63,42 @@ public class MainActivity extends AppCompatActivity
                 readData ();
             }
         });
+
+        findViewById (R.id.http_btn).setOnClickListener (new View.OnClickListener ()
+        {
+            @Override
+            public void onClick (View v)
+            {
+                httpRequest ();
+            }
+        });
+    }
+
+    private void httpRequest ()
+    {
+        AsyncHttpClient httpClient = new AsyncHttpClient ();
+        httpClient.get ("http://www.baidu.com", new AsyncHttpResponseHandler ()
+        {
+            @Override
+            public void onSuccess (int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes)
+            {
+                String res = new String (bytes);
+                resTv.setText (res);
+                Log.d ("qiuqiu",res);
+            }
+
+            @Override
+            public void onFailure (int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable)
+            {
+
+            }
+        });
     }
 
     private void writeData ()
     {
         SimpleData simpleData = new SimpleData ("ni",1111,true);
-        DBHelper dbHelper = DBHelper.getHelper (this);
+        DBHelper dbHelper = DBHelper.getInstance (this);
 
         try
         {
@@ -98,7 +129,7 @@ public class MainActivity extends AppCompatActivity
     {
         try
         {
-            DBHelper dbHelper = DBHelper.getHelper (this);
+            DBHelper dbHelper = DBHelper.getInstance (MainActivity.this);
             List<SimpleData> simpleDataList = dbHelper.getDao ().queryForAll ();
             resTv.setText (new Gson ().toJson (simpleDataList));
         }
