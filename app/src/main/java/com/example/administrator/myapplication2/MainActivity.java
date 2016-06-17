@@ -16,7 +16,11 @@ import com.google.gson.Gson;
 import com.loopj.android.http.*;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * dev分支提交代码
@@ -70,6 +74,18 @@ public class MainActivity extends AppCompatActivity
             public void onClick (View v)
             {
                 httpRequest ();
+            }
+        });
+
+        findViewById (R.id.time_btn).setOnClickListener (new View.OnClickListener ()
+        {
+            @Override
+            public void onClick (View v)
+            {
+                SimpleDateFormat dff = new SimpleDateFormat("HH:mm", Locale.getDefault ());
+                dff.setTimeZone(TimeZone.getTimeZone("GMT-04"));
+                String ee = dff.format(new Date ());
+                resTv.setText (ee);
             }
         });
     }

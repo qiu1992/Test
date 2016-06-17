@@ -35,6 +35,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="请求网络"/>
+
+    <Button
+        android:id="@+id/time_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="美国东部时间"/>
+
     <TextView
         android:id="@+id/res_tv"
         android:layout_width="wrap_content"
