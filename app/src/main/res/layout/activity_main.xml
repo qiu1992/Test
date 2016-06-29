@@ -42,10 +42,29 @@
         android:layout_height="wrap_content"
         android:text="美国东部时间"/>
 
+    <Button
+        android:id="@+id/sdcard_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SD卡路径"/>
+
     <TextView
         android:id="@+id/res_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"/>
+
+    <EditText
+        android:id="@+id/test_input_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="0123456789."
+        android:inputType="numberDecimal"/>
+
+    <Button
+        android:id="@+id/recycle_view_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="recycleView"/>
 
 </LinearLayout>

@@ -1,12 +1,17 @@
 package com.example.administrator.myapplication2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +33,9 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity
 {
     private TextView resTv;
+    private EditText editText;
+    private final double max = 999999;
+    private boolean flag;
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
@@ -86,6 +94,70 @@ public class MainActivity extends AppCompatActivity
                 dff.setTimeZone(TimeZone.getTimeZone("GMT-04"));
                 String ee = dff.format(new Date ());
                 resTv.setText (ee);
+            }
+        });
+
+        findViewById (R.id.sdcard_btn).setOnClickListener (new View.OnClickListener ()
+        {
+            @Override
+            public void onClick (View v)
+            {
+                resTv.setText (Environment.getExternalStorageDirectory ().getAbsolutePath ());
+                System.out.println (1/0);
+            }
+        });
+
+        findViewById (R.id.recycle_view_btn).setOnClickListener (new View.OnClickListener ()
+        {
+            @Override
+            public void onClick (View v)
+            {
+                startActivity (new Intent (MainActivity.this,RecycleViewActivity.class));
+            }
+        });
+
+        editText = (EditText) findViewById (R.id.test_input_et);
+        editText.addTextChangedListener (new TextWatcher ()
+        {
+            @Override
+            public void beforeTextChanged (CharSequence s, int start, int count, int after)
+            {
+                if (flag)
+                    return;
+                Log.d ("qiu_be",s.toString ());
+            }
+
+            @Override
+            public void onTextChanged (CharSequence s, int start, int before, int count)
+            {
+                if (flag)
+                    return;
+                Log.d ("qiu_on",s.toString ());
+            }
+
+            @Override
+            public void afterTextChanged (Editable s)
+            {
+                Log.d ("qiu_af",s.toString ());
+                if (s.toString ().length () > 6)
+                {
+                    double num = Double.parseDouble (s.toString ());
+                    if (num > 999999)
+                    {
+                        editText.setText ("999999");
+                        editText.setSelection (6);
+                        flag = true;
+                        return;
+                    }
+                    else
+                    {
+                        flag = false;
+                    }
+                }
+                else
+                {
+                    flag = false;
+                }
             }
         });
     }
