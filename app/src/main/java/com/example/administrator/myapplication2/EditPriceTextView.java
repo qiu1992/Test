@@ -2,6 +2,7 @@ package com.example.administrator.myapplication2;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -106,7 +107,7 @@ public class EditPriceTextView extends LinearLayout implements View.OnClickListe
         decreaseStep = 0;
         currentPrice = 0;
         contentEt.setText ("");
-        doCallBack ("0");
+        doCallBack ("0" + "//" + currentPrice);
     }
 
     private void doCallBack (String res)
@@ -128,12 +129,20 @@ public class EditPriceTextView extends LinearLayout implements View.OnClickListe
                 {
                     return;
                 }
+                currentPrice -= decreaseStep;
+                currentPrice = Util.getFormatPrice (currentPrice);
+                contentEt.setText (Util.formatDouble3 (currentPrice));
+                doCallBack (Util.formatDouble3 (currentPrice) + "//" + currentPrice);
                 break;
             case R.id.add_layout:
                 if (addStep == 0 || currentPrice == MAX_PRICE)
                 {
                     return;
                 }
+                currentPrice += decreaseStep;
+                currentPrice = Util.getFormatPrice (currentPrice);
+                contentEt.setText (Util.formatDouble3 (currentPrice));
+                doCallBack (Util.formatDouble3 (currentPrice)+ "//" + currentPrice);
                 break;
         }
     }
@@ -170,6 +179,11 @@ public class EditPriceTextView extends LinearLayout implements View.OnClickListe
             isSetSelection = true;
             isChange = true;
             resStr = editable.toString ();
+
+            if (TextUtils.isEmpty (resStr))
+            {
+                currentPrice = 0;
+            }
 
             // 如果仅仅输入一个"."
             if (resStr.startsWith (".") && resStr.length () == 1)
@@ -234,7 +248,11 @@ public class EditPriceTextView extends LinearLayout implements View.OnClickListe
             }
             isChange = false;
             contentEt.invalidate ();
-            doCallBack (resStr);
+            if (Util.isDouble (resStr))
+            {
+                currentPrice = Util.getDouble (resStr);
+            }
+            doCallBack ((TextUtils.isEmpty (resStr) ? "0" : resStr) + "//" + currentPrice);
         }
     };
 
