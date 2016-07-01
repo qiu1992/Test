@@ -180,8 +180,14 @@ public class EditPriceTextView extends LinearLayout implements View.OnClickListe
             // 不止一个"."
             if (resStr.contains (".") && resStr.indexOf (".") != resStr.lastIndexOf ("."))
             {
+                // 光标不在最后
                 if (contentEt.getSelectionStart () != resStr.length ())
-                {}
+                {
+                    StringBuilder builder = new StringBuilder (resStr);
+                    builder.delete (contentEt.getSelectionStart () - 1,contentEt.getSelectionStart ());
+                    resStr = builder.toString ();
+                    builder.setLength (0);
+                }
                 else
                 {
                     resStr = resStr.substring (0, resStr.length () - 1);
