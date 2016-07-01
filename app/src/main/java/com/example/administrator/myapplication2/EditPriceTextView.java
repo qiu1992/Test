@@ -222,14 +222,19 @@ public class EditPriceTextView extends LinearLayout implements View.OnClickListe
                 resStr = Util.getPrice (resStr);
             }
 
+            if (!resStr.contains (".") && resStr.startsWith ("0") && resStr.length () > 1)
+            {
+                resStr = resStr.substring (1,resStr.length ());
+            }
+
             contentEt.setText (resStr);
             if (isSetSelection)
             {
                 contentEt.setSelection (resStr.length ());
             }
+            isChange = false;
             contentEt.invalidate ();
             doCallBack (resStr);
-            isChange = false;
         }
     };
 

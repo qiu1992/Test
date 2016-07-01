@@ -45,7 +45,7 @@ public class Util
         {
             if (price.length () > 6)
             {
-                price = price.substring (0,price.length () - 1);
+                price = price.substring (0,6);
             }
         }
         return price;

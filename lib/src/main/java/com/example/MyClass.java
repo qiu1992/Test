@@ -55,7 +55,7 @@ public class MyClass
 //        System.out.println (getPrice3 ("999999.123"));
 //        String res = "0.";
 //        System.out.println ((res.length () - 1) - res.indexOf ("."));
-        System.out.println ("123".substring (0,1));
+        System.out.println ("123".substring (1,"123".length ()));
     }
 
     public static String getPrice (String price)
