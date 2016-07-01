@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="46dp"
+              android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/decrease_layout"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:background="#0f5d9b"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_min"/>
+
+        <TextView
+            android:id="@+id/decrease_step_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/content_et"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#738189"
+        android:digits="0123456789."
+        android:hint="请输入数量"
+        android:inputType="numberDecimal"
+        android:maxLength="10"
+        android:paddingLeft="6dp"
+        android:singleLine="true"
+        android:text="0.123"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:id="@+id/add_layout"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:background="#0f5d9b"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_add"/>
+
+        <TextView
+            android:id="@+id/add_step_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+</LinearLayout>

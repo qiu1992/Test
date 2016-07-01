@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,8 @@ import android.widget.Toast;
 import com.example.administrator.myapplication2.db.DBHelper;
 import com.example.administrator.myapplication2.db.SimpleData;
 import com.google.gson.Gson;
-import com.loopj.android.http.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private EditText editText;
     private final double max = 999999;
     private boolean flag;
+    private EditPriceTextView editPriceTextView;
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
@@ -158,6 +161,19 @@ public class MainActivity extends AppCompatActivity
                 {
                     flag = false;
                 }
+            }
+        });
+
+        editPriceTextView = (EditPriceTextView) findViewById (R.id.price_tv);
+        editPriceTextView.setAddStep (0.01);
+        editPriceTextView.setDecreaseStep (0.01);
+        editPriceTextView.setListener (new EditPriceTextView.TextChangeListener ()
+        {
+            @Override
+            public void getText (String resStr)
+            {
+//                resTv.setText (null == resStr ? "null" : resStr.length () + "/" +resStr);
+                resTv.setText (resStr);
             }
         });
     }
