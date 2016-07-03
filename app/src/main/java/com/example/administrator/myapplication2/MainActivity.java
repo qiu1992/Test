@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         editText = (EditText) findViewById (R.id.test_input_et);
+        editText.setInputType (InputType.TYPE_CLASS_NUMBER);
 //        editText.setKeyListener (DigitsKeyListener.getInstance ("0123456789."));
 //        editText.addTextChangedListener (new TextWatcher ()
 //        {

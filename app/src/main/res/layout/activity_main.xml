@@ -55,11 +55,10 @@
         android:text="Hello World!"/>
 
     <EditText
-        android:visibility="visible"
         android:id="@+id/test_input_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"/>
+        android:visibility="visible"/>
 
     <Button
         android:id="@+id/recycle_view_btn"
