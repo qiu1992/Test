@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -120,53 +120,57 @@ public class MainActivity extends AppCompatActivity
         });
 
         editText = (EditText) findViewById (R.id.test_input_et);
-        editText.addTextChangedListener (new TextWatcher ()
-        {
-            @Override
-            public void beforeTextChanged (CharSequence s, int start, int count, int after)
-            {
-                if (flag)
-                    return;
-                Log.d ("qiu_be",s.toString ());
-            }
-
-            @Override
-            public void onTextChanged (CharSequence s, int start, int before, int count)
-            {
-                if (flag)
-                    return;
-                Log.d ("qiu_on",s.toString ());
-            }
-
-            @Override
-            public void afterTextChanged (Editable s)
-            {
-                Log.d ("qiu_af",s.toString ());
-                if (s.toString ().length () > 6)
-                {
-                    double num = Double.parseDouble (s.toString ());
-                    if (num > 999999)
-                    {
-                        editText.setText ("999999");
-                        editText.setSelection (6);
-                        flag = true;
-                        return;
-                    }
-                    else
-                    {
-                        flag = false;
-                    }
-                }
-                else
-                {
-                    flag = false;
-                }
-            }
-        });
+//        editText.setKeyListener (DigitsKeyListener.getInstance ("0123456789."));
+//        editText.addTextChangedListener (new TextWatcher ()
+//        {
+//            @Override
+//            public void beforeTextChanged (CharSequence s, int start, int count, int after)
+//            {
+//                if (flag)
+//                    return;
+//                Log.d ("qiu_be",s.toString ());
+//            }
+//
+//            @Override
+//            public void onTextChanged (CharSequence s, int start, int before, int count)
+//            {
+//                if (flag)
+//                    return;
+//                Log.d ("qiu_on",s.toString ());
+//            }
+//
+//            @Override
+//            public void afterTextChanged (Editable s)
+//            {
+//                Log.d ("qiu_af",s.toString ());
+//                if (s.toString ().length () > 6)
+//                {
+//                    double num = Double.parseDouble (s.toString ());
+//                    if (num > 999999)
+//                    {
+//                        editText.setText ("999999");
+//                        editText.setSelection (6);
+//                        flag = true;
+//                        return;
+//                    }
+//                    else
+//                    {
+//                        flag = false;
+//                    }
+//                }
+//                else
+//                {
+//                    flag = false;
+//                }
+//            }
+//        });
 
         editPriceTextView = (EditPriceTextView) findViewById (R.id.price_tv);
         editPriceTextView.setAddStep (0.01);
         editPriceTextView.setDecreaseStep (0.01);
+        editPriceTextView.setMinPrice (1);
+        editPriceTextView.setRadixPointLength (2);
+        editPriceTextView.setMaxPrice (10);
         editPriceTextView.setListener (new EditPriceTextView.TextChangeListener ()
         {
             @Override

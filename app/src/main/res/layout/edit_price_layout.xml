@@ -32,13 +32,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="#738189"
-        android:digits="0123456789."
         android:hint="请输入数量"
         android:inputType="numberDecimal"
-        android:maxLength="10"
         android:paddingLeft="6dp"
         android:singleLine="true"
-        android:text="0.123"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="18sp"/>

@@ -233,7 +233,7 @@ public class EditPriceTextViewBk extends LinearLayout implements View.OnClickLis
 
             if (resStr.length () - resStr.indexOf (".") > 4 || Util.getDouble (resStr) > MAX_PRICE)
             {
-                resStr = Util.getPrice (resStr);
+                resStr = Util.getPrice (resStr,MAX_PRICE,3);
                 contentEt.setText (resStr);
                 contentEt.setSelection (resStr.length ());
                 currentPrice = Util.getDouble (resStr);
