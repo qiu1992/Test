@@ -58,7 +58,7 @@
         android:id="@+id/test_input_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/recycle_view_btn"
@@ -68,6 +68,12 @@
 
     <com.example.administrator.myapplication2.EditPriceTextView
         android:id="@+id/price_tv"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.example.administrator.myapplication2.EditAmountTextView
+        android:id="@+id/amount_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

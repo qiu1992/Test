@@ -55,7 +55,65 @@ public class MyClass
 //        System.out.println (getPrice3 ("999999.123"));
 //        String res = "0.";
 //        System.out.println ((res.length () - 1) - res.indexOf ("."));
-        System.out.println ("123".substring (1,"123".length ()));
+//        DecimalFormat format = new DecimalFormat ("###,000");
+//        System.out.println (format.format (123));
+//        System.out.println (format.format (12345));
+//        System.out.println (format.format (123456));
+//        System.out.println (format.format (1234567));
+//        System.out.println (getFormatAmountStr ("123,456",123456));
+//        System.out.println (getFormatAmountStr ("1,234",123456));
+//        System.out.println (getFormatAmountStr ("1,234,567",123456));
+//        System.out.println (getFormatAmountStr ("1,234,578",123456));
+//        System.out.println (getFormatAmountStr ("12,345",123456));
+        System.out.println (Integer.parseInt (getFormatAmountStr ("123457",123456)));
+//        System.out.println ("123".substring (1,"123".length ()));
+    }
+
+    /**
+     * 得到一个以逗号分隔的数字，类似：123,456
+     * @param amount
+     * @return
+     */
+    public static String getAmountWithComma (int amount)
+    {
+        DecimalFormat format = new DecimalFormat ("###,###");
+        return format.format (amount);
+    }
+
+    /**
+     * 获得格式化过的数量（类似:123,456）
+     * @param currentAmount
+     * @param maxAmount
+     * @return
+     */
+    public static String getFormatAmountStr (String currentAmount,int maxAmount)
+    {
+        String currentAmountStr = currentAmount.replace (",","");
+        String maxAmountStr = String.valueOf (maxAmount);
+        int currentAmountLength = currentAmountStr.length ();
+        int maxAmountLength = maxAmountStr.length ();
+
+        if (currentAmountLength > maxAmountLength)
+        {
+            currentAmountStr = currentAmountStr.substring (0,maxAmountLength);
+            // 长度截断之后（当前价格的长度等于最大价格的长度），当前价格的值依旧有可能大于最大价格
+            int tempAmount = Integer.parseInt (currentAmountStr);
+            if (tempAmount >= maxAmount)
+            {
+                currentAmountStr = maxAmountStr;
+            }
+        }
+        else if (currentAmountStr.length () == maxAmountStr.length ())
+        {
+            // 长度截断之后（当前价格的长度等于最大价格的长度），当前价格的值依旧有可能大于最大价格
+            int tempAmount = Integer.parseInt (currentAmountStr);
+            if (tempAmount >= maxAmount)
+            {
+                currentAmountStr = maxAmountStr;
+            }
+        }
+
+        return getAmountWithComma (Integer.parseInt (currentAmountStr));
     }
 
     public static String getPrice (String price)

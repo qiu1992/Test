@@ -3,6 +3,7 @@ package com.example.administrator.myapplication2;
 import android.content.Context;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -22,15 +23,14 @@ public class EditAmountTextView extends LinearLayout implements View.OnClickList
     private LinearLayout addLayout;// 右边加号布局
     private TextView addStepTv;// 每次增加的步长
 
-    private double decreaseStep = 0;
-    private double addStep = 0;
-    private double maxAmount = 0;
-    private double minAmount = 0;
+    private int decreaseStep = 0;
+    private int addStep = 0;
+    private int maxAmount = 0;
+    private int minAmount = 0;
 
     private boolean isChange = false;// 编辑区域是否正在变化（防止afterTextChanged中递归调用导致的栈溢出）
     private String resStr = "";
-    private double currentAmount = 0;
-    private boolean isSetSelection = true;
+    private int currentAmount = 0;
     private TextChangeListener listener;
 
     public EditAmountTextView (Context context)
@@ -49,6 +49,58 @@ public class EditAmountTextView extends LinearLayout implements View.OnClickList
     {
         super (context, attrs, defStyleAttr);
         findViews (context);
+    }
+
+    public int getAddStep ()
+    {
+        return addStep;
+    }
+
+    public void setAddStep (int addStep)
+    {
+        this.addStep = addStep;
+        addStepTv.setText (Util.getAmountWithComma (addStep));
+    }
+
+    public int getMaxAmount ()
+    {
+        return maxAmount;
+    }
+
+    public void setMaxAmount (int maxAmount)
+    {
+        this.maxAmount = maxAmount;
+    }
+
+    public int getMinAmount ()
+    {
+        return minAmount;
+    }
+
+    public void setMinAmount (int minAmount)
+    {
+        this.minAmount = minAmount;
+    }
+
+    public TextChangeListener getListener ()
+    {
+        return listener;
+    }
+
+    public void setListener (TextChangeListener listener)
+    {
+        this.listener = listener;
+    }
+
+    public int getDecreaseStep ()
+    {
+        return decreaseStep;
+    }
+
+    public void setDecreaseStep (int decreaseStep)
+    {
+        this.decreaseStep = decreaseStep;
+        decreaseStepTv.setText (Util.getAmountWithComma (decreaseStep));
     }
 
     private void findViews (Context context)
@@ -87,8 +139,56 @@ public class EditAmountTextView extends LinearLayout implements View.OnClickList
         switch (view.getId ())
         {
             case R.id.decrease_layout:
+                if (decreaseStep == 0 || currentAmount <= minAmount)
+                {
+                    decreaseStepTv.setText ("--");
+                    currentAmount = minAmount;
+                    contentEt.setText (Util.getAmountWithComma (currentAmount));
+                    contentEt.setSelection (contentEt.getText ().toString ().length ());
+                    doCallBack (Util.getAmountWithComma (currentAmount) + "//" + currentAmount);
+                    return;
+                }
+
+                currentAmount -= decreaseStep;
+                contentEt.setText (Util.getAmountWithComma (currentAmount));
+                contentEt.setSelection (contentEt.getText ().toString ().length ());
+
+                if (currentAmount <= minAmount)
+                {
+                    addStepTv.setText (Util.getAmountWithComma (addStep));
+                    decreaseStepTv.setText ("--");
+                }
+                else
+                {
+                    addStepTv.setText (Util.getAmountWithComma (addStep));
+                    decreaseStepTv.setText (Util.getAmountWithComma (decreaseStep));
+                }
                 break;
             case R.id.add_layout:
+                if (addStep == 0 || currentAmount >= maxAmount)
+                {
+                    addStepTv.setText ("--");
+                    currentAmount = maxAmount;
+                    contentEt.setText (Util.getAmountWithComma (currentAmount));
+                    contentEt.setSelection (contentEt.getText ().toString ().length ());
+                    doCallBack (Util.getAmountWithComma (currentAmount) + "//" + currentAmount);
+                    return;
+                }
+
+                currentAmount += addStep;
+                contentEt.setText (Util.getAmountWithComma (currentAmount));
+                contentEt.setSelection (contentEt.getText ().toString ().length ());
+
+                if (currentAmount >= maxAmount)
+                {
+                    addStepTv.setText ("--");
+                    decreaseStepTv.setText (Util.getAmountWithComma (decreaseStep));
+                }
+                else
+                {
+                    addStepTv.setText (Util.getAmountWithComma (addStep));
+                    decreaseStepTv.setText (Util.getAmountWithComma (decreaseStep));
+                }
                 break;
         }
     }
@@ -121,14 +221,86 @@ public class EditAmountTextView extends LinearLayout implements View.OnClickList
                 return;
             }
 
-            isSetSelection = true;
             isChange = true;
             resStr = editable.toString ();
-            // TODO
-            // 处理过程
+//            int lastSelection = contentEt.getSelectionStart ();
+//            int lastLength = resStr.length ();
+
+            if (TextUtils.isEmpty (resStr))
+            {
+                currentAmount = 0;
+            }
+
+            if (resStr.startsWith ("0") && resStr.length () > 1)
+            {
+                resStr = resStr.substring (1, resStr.length ());
+            }
+
+            if (!TextUtils.isEmpty (resStr))
+            {
+                resStr = Util.getFormatAmountStr (resStr, maxAmount);
+            }
+
+            if (Util.isInteger (resStr.replace (",","")))
+            {
+                currentAmount = Integer.parseInt (resStr.replace (",",""));
+
+                if (currentAmount < minAmount)
+                {
+                    currentAmount = minAmount;
+                    decreaseStepTv.setText ("--");
+                    resStr = Util.getAmountWithComma (currentAmount);
+                }
+                else if (currentAmount == minAmount)
+                {
+                    decreaseStepTv.setText ("--");
+                }
+                else
+                {
+                    if (currentAmount <= maxAmount && currentAmount != minAmount)
+                    {
+                        decreaseStepTv.setText (Util.getAmountWithComma (decreaseStep));
+                    }
+                }
+
+                if (currentAmount > maxAmount)
+                {
+                    currentAmount = maxAmount;
+                    addStepTv.setText ("--");
+                    resStr = Util.getAmountWithComma (currentAmount);
+                }
+                else if (currentAmount == maxAmount)
+                {
+                    addStepTv.setText ("--");
+                }
+                else
+                {
+                    if (currentAmount >= minAmount && currentAmount != maxAmount)
+                    {
+                        addStepTv.setText (Util.getAmountWithComma (addStep));
+                    }
+                }
+            }
+
+            contentEt.setText (resStr);
+//            if (lastSelection >= 0 && lastSelection <= resStr.length ())
+//            {
+//                if (lastLength < resStr.length ())
+//                {
+//                    contentEt.setSelection (lastSelection + 1);
+//                }
+//                else
+//                {
+//                    contentEt.setSelection (lastSelection > resStr.length () ? resStr.length () : lastSelection);
+//                }
+//            }
+//            else
+//            {
+                contentEt.setSelection (resStr.length ());
+//            }
             isChange = false;
             contentEt.invalidate ();
-            doCallBack ("");
+            doCallBack ((TextUtils.isEmpty (resStr) ? "0" : resStr) + "//" + currentAmount);
         }
     };
 

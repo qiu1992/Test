@@ -51,6 +51,13 @@ public class Util
 //        return price;
 //    }
 
+    /**
+     * 根据当前价格，最大价格以及保留的小数位数，获得一个符合规则的数值字符串
+     * @param price 当前价格
+     * @param maxPrice 最大价格
+     * @param radixPointLength 保留的小数位数
+     * @return String
+     */
     public static String getPrice (String price,double maxPrice,int radixPointLength)
     {
         String maxPriceStr = String.valueOf (maxPrice);
@@ -96,6 +103,11 @@ public class Util
         return price;
     }
 
+    /**
+     * 从一个字符串转换成double类型的数据
+     * @param price
+     * @return
+     */
     public static double getDouble (String price)
     {
         double temp;
@@ -115,19 +127,34 @@ public class Util
         return temp;
     }
 
+    /**
+     * 获得一个字符串类型的，已经格式化过的数值（保留三位小数）
+     * @param price
+     * @return
+     */
     public static String formatDouble3 (double price)
     {
         DecimalFormat format = new DecimalFormat ("0.000");
         return format.format (price);
     }
 
-    public static double getFormatPrice (double price)
+    /**
+     * 获得一个格式化过的double类型的数值（保留三位小数）
+     * @param price
+     * @return
+     */
+    public static double getFormatDoublePrice (double price)
     {
         DecimalFormat format = new DecimalFormat ("0.000");
         String temp = format.format (price);
         return Double.parseDouble (temp);
     }
 
+    /**
+     * 判断一个字符串是否可以转换成double类型的数据
+     * @param s
+     * @return
+     */
     public static boolean isDouble (String s)
     {
         boolean flag = true;
@@ -140,5 +167,66 @@ public class Util
             flag = false;
         }
         return flag;
+    }
+
+    public static boolean isInteger (String s)
+    {
+        boolean flag = true;
+        try
+        {
+            Integer.parseInt (s);
+        }
+        catch (Exception e)
+        {
+            flag = false;
+        }
+        return flag;
+    }
+
+    /**
+     * 得到一个以逗号分隔的数字，类似：123,456
+     * @param amount
+     * @return
+     */
+    public static String getAmountWithComma (int amount)
+    {
+        DecimalFormat format = new DecimalFormat ("###,###");
+        return format.format (amount);
+    }
+
+    /**
+     * 获得格式化过的数量（类似:123,456）
+     * @param currentAmount
+     * @param maxAmount
+     * @return
+     */
+    public static String getFormatAmountStr (String currentAmount,int maxAmount)
+    {
+        String currentAmountStr = currentAmount.replace (",","");
+        String maxAmountStr = String.valueOf (maxAmount);
+        int currentAmountLength = currentAmountStr.length ();
+        int maxAmountLength = maxAmountStr.length ();
+
+        if (currentAmountLength > maxAmountLength)
+        {
+            currentAmountStr = currentAmountStr.substring (0,maxAmountLength);
+            // 长度截断之后（当前价格的长度等于最大价格的长度），当前价格的值依旧有可能大于最大价格
+            int tempAmount = Integer.parseInt (currentAmountStr);
+            if (tempAmount >= maxAmount)
+            {
+                currentAmountStr = maxAmountStr;
+            }
+        }
+        else if (currentAmountStr.length () == maxAmountStr.length ())
+        {
+            // 长度截断之后（当前价格的长度等于最大价格的长度），当前价格的值依旧有可能大于最大价格
+            int tempAmount = Integer.parseInt (currentAmountStr);
+            if (tempAmount >= maxAmount)
+            {
+                currentAmountStr = maxAmountStr;
+            }
+        }
+
+        return getAmountWithComma (Integer.parseInt (currentAmountStr));
     }
 }

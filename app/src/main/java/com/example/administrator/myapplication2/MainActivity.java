@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     private final double max = 999999;
     private boolean flag;
     private EditPriceTextView editPriceTextView;
+    private EditAmountTextView editAmountTextView;
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
@@ -179,6 +180,20 @@ public class MainActivity extends AppCompatActivity
             public void getText (String resStr)
             {
 //                resTv.setText (null == resStr ? "null" : resStr.length () + "/" +resStr);
+                resTv.setText (resStr);
+            }
+        });
+
+        editAmountTextView = (EditAmountTextView) findViewById (R.id.amount_tv);
+        editAmountTextView.setAddStep (1000);
+        editAmountTextView.setDecreaseStep (1000);
+        editAmountTextView.setMinAmount (0);
+        editAmountTextView.setMaxAmount (999999);
+        editAmountTextView.setListener (new EditAmountTextView.TextChangeListener ()
+        {
+            @Override
+            public void getText (String resStr)
+            {
                 resTv.setText (resStr);
             }
         });

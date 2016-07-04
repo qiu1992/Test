@@ -117,7 +117,7 @@ public class EditPriceTextViewBk extends LinearLayout implements View.OnClickLis
                     return;
                 }
                 currentPrice -= decreaseStep;
-                currentPrice = Util.getFormatPrice (currentPrice);
+                currentPrice = Util.getFormatDoublePrice (currentPrice);
                 contentEt.setText (Util.formatDouble3 (currentPrice));
                 if (null != listener)
                 {
@@ -130,7 +130,7 @@ public class EditPriceTextViewBk extends LinearLayout implements View.OnClickLis
                     return;
                 }
                 currentPrice += addStep;
-                currentPrice = Util.getFormatPrice (currentPrice);
+                currentPrice = Util.getFormatDoublePrice (currentPrice);
                 contentEt.setText (Util.formatDouble3 (currentPrice));
                 if (null != listener)
                 {
@@ -180,7 +180,7 @@ public class EditPriceTextViewBk extends LinearLayout implements View.OnClickLis
                 contentEt.setSelection (2);
                 if (Util.isDouble (resStr))
                 {
-                    currentPrice = Util.getFormatPrice (Double.parseDouble (resStr));
+                    currentPrice = Util.getFormatDoublePrice (Double.parseDouble (resStr));
                     //TODO
                     listener.getText ("0."+ "/" + currentPrice);
                 }
@@ -200,7 +200,7 @@ public class EditPriceTextViewBk extends LinearLayout implements View.OnClickLis
                 contentEt.setSelection (temp.length ());
                 if (Util.isDouble (resStr))
                 {
-                    currentPrice = Util.getFormatPrice (Double.parseDouble (resStr));
+                    currentPrice = Util.getFormatDoublePrice (Double.parseDouble (resStr));
                 }
                 contentEt.invalidate ();
                 isChange = false;
@@ -251,7 +251,7 @@ public class EditPriceTextViewBk extends LinearLayout implements View.OnClickLis
             }
             if (Util.isDouble (resStr))
             {
-                currentPrice = Util.getFormatPrice (Double.parseDouble (resStr));
+                currentPrice = Util.getFormatDoublePrice (Double.parseDouble (resStr));
             }
             contentEt.setSelection (resStr.length ());
             isChange = false;

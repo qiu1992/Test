@@ -180,7 +180,7 @@ public class EditPriceTextView extends LinearLayout implements View.OnClickListe
 //                addStepTv.setText (String.valueOf (addStep));
 //                decreaseStepTv.setText (String.valueOf (decreaseStep));
                 currentPrice -= decreaseStep;
-                currentPrice = Util.getFormatPrice (currentPrice);
+                currentPrice = Util.getFormatDoublePrice (currentPrice);
                 contentEt.setText (Util.formatDouble3 (currentPrice));
 
                 if (currentPrice <= minPrice)
@@ -209,7 +209,7 @@ public class EditPriceTextView extends LinearLayout implements View.OnClickListe
 //                addStepTv.setText (String.valueOf (addStep));
 //                decreaseStepTv.setText (String.valueOf (decreaseStep));
                 currentPrice += addStep;
-                currentPrice = Util.getFormatPrice (currentPrice);
+                currentPrice = Util.getFormatDoublePrice (currentPrice);
                 contentEt.setText (Util.formatDouble3 (currentPrice));
 
                 if (currentPrice >= maxPrice)
