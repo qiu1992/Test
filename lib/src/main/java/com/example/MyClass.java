@@ -1,6 +1,8 @@
 package com.example;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyClass
 {
@@ -65,8 +67,123 @@ public class MyClass
 //        System.out.println (getFormatAmountStr ("1,234,567",123456));
 //        System.out.println (getFormatAmountStr ("1,234,578",123456));
 //        System.out.println (getFormatAmountStr ("12,345",123456));
-        System.out.println (Integer.parseInt (getFormatAmountStr ("123457",123456)));
+//        System.out.println (Integer.parseInt (getFormatAmountStr ("123457",123456)));
 //        System.out.println ("123".substring (1,"123".length ()));
+
+//        System.out.println (getFormatNumberStr (0));
+//        System.out.println (getFormatNumberStr (1));
+//        System.out.println (getFormatNumberStr (11));
+//        System.out.println (getFormatNumberStr (123));
+//        System.out.println (getFormatNumberStr (1234));
+//
+//        System.out.println ("----");
+//
+//        System.out.println (getFormatNumberStr (2.3));
+//        System.out.println (getFormatNumberStr (2.35));
+//        System.out.println (getFormatNumberStr (2.356));
+//        System.out.println (getFormatNumberStr (12.3));
+//        System.out.println (getFormatNumberStr (12.35));
+//        System.out.println (getFormatNumberStr (12.356));
+//
+//        System.out.println ("----");
+//
+//        System.out.println (getFormatNumberStr (100));
+//        System.out.println (getFormatNumberStr (101));
+//        System.out.println (getFormatNumberStr (101.2));
+//        System.out.println (getFormatNumberStr (101.33));
+//        System.out.println (getFormatNumberStr (101.356));
+//
+//        System.out.println ("----");
+//
+//        System.out.println (getFormatNumberStr (1234));
+//        System.out.println (getFormatNumberStr (1234.4));
+//        System.out.println (getFormatNumberStr (1234.454));
+//        System.out.println (getFormatNumberStr (1234.4519));
+
+//        System.out.println (getFormatNumberStr (12345.4519));
+//        System.out.println (getFormatNumberStr (123456.4519));
+//        System.out.println (getFormatNumberStr (1234567.4519));
+//        System.out.println (getFormatNumberStr (12345678.4519));
+//        System.out.println (getFormatNumberStr (123456789.4519));
+//        System.out.println (getFormatNumberStr (1234567890.4519));
+//        System.out.println (getFormatNumberStr (12345678901.4519));
+//        System.out.println (getFormatNumberStr (123456789012.4519));\
+
+        System.out.println (getFormatNumberStr (2000000));
+
+        List<String> dataList = new ArrayList<> ();
+        dataList.isEmpty ();
+        System.out.println ("{ \"content\": \"测试推送内容789\", \"count\": 2, \"stopCurrent\": false, \"stopForever\": false, \"title\": \"测试标题44455\", \"isDebug\": false, \"type\": 3 }");
+        boolean [] test = new boolean[10];
+        System.out.println (test.toString ());
+    }
+
+    ////////////////////
+    public static String getFormatNumberStr (double number)
+    {
+        String res = "0";
+        if (number >= 0 && number < 1000)
+        {
+            if (((int)number) == number)
+            {
+                res = String.valueOf ((int)number);
+            }
+            else
+            {
+                res = formatDouble3 (number);
+            }
+        }
+        else if (number >= 1000 && number < 1000000)// K
+        {
+            res = getFormatNumberStr (number,1000) + "K";
+        }
+        else if (number >= 1000000 && number < 1000000000)// M
+        {
+            res = getFormatNumberStr (number,1000000) + "M";
+        }
+        else if (number >= 1000000000)// B
+        {
+            res = getFormatNumberStr (number,1000000000) + "B";
+        }
+        return res;
+    }
+
+    private static String getFormatNumberStr (double number,int rate)
+    {
+        String res;
+        if (number % rate == 0)
+        {
+            res = String.valueOf ((int)number / rate);
+        }
+        else
+        {
+            res = formatDouble3 (number / (rate * 1.0));
+        }
+        return res;
+    }
+
+    /**
+     * 获得一个字符串类型的，已经格式化过的数值（保留三位小数）
+     *
+     * @param price
+     * @return
+     */
+    public static String formatDouble3 (double price)
+    {
+        DecimalFormat format = new DecimalFormat ("0.000");
+        return format.format (price);
+    }
+    ///////////////////////
+
+    /**
+     * 获得一个字符串类型的，已经格式化过的数值（保留三位小数）
+     * @param price
+     * @return
+     */
+    public static String formatDouble3 (String price)
+    {
+        DecimalFormat format = new DecimalFormat ("0.000");
+        return format.format (price);
     }
 
     /**
